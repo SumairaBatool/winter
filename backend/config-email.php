@@ -128,6 +128,7 @@ if ($result_cl->num_rows > 0) {
     } catch (Exception $e) {
         $status = 'danger';
         $msg = "Email sending failed. Error: {$e->getMessage()}";
+        error_log("Email sending failed: " . $e->getMessage());  // Log error to server log for troubleshooting
     }
 } else {
     $status = 'danger';

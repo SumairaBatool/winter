@@ -22,8 +22,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
         $checkResult = $checkStmt->get_result();
 
         if ($checkResult->num_rows > 0) {
-            // Student already exists, so skip insertion or update instead
-            // Optionally update the existing student record
+            // Student already exists, so update the existing record
             $updateStmt = $conn->prepare("UPDATE student SET student_name = ?, email = ? WHERE sid = ?");
             $updateStmt->bind_param("ssi", $row['username'], $row['useremail'], $row['id']);
             $updateStmt->execute();
@@ -41,12 +40,23 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
             $updateAdmissionStmt->bind_param("i", $admission_id);
             $updateAdmissionStmt->execute();
 
-            // Redirect with success message
-            header("Location: user-admissions.php?msg=Admission confirmed successfully&status=success");
-            exit;
+            // Send email confirmation
+            $to = $row['useremail'];
+            $subject = "Admission Confirmation";
+            $message = "Dear " . $row['username'] . ",\n\nYour admission has been confirmed. You are now enrolled in the course.";
+            $headers = "From: admin@yourwebsite.com";
+
+            if (mail($to, $subject, $message, $headers)) {
+                // Redirect with success message
+                header("Location: user-admissions.php?msg=Admission confirmed successfully & email sent&status=success");
+                exit;
+            } else {
+                // Email not sent
+                header("Location: user-admissions.php?msg=Admission confirmed, but email failed to send&status=warning");
+                exit;
+            }
         } else {
             // Insert the new student record into the student table
-            // ** Maintaining the foreign key constraint (sid refers to a_users table) **
             $stmt = $conn->prepare("INSERT INTO student (sid, student_name, email) VALUES (?, ?, ?)");
             $stmt->bind_param("iss", $row['id'], $row['username'], $row['useremail']);
 
@@ -64,9 +74,21 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
                 $updateStmt->bind_param("i", $admission_id);
                 $updateStmt->execute();
 
-                // Redirect with success message
-                header("Location: user-admissions.php?msg=Admission confirmed successfully&status=success");
-                exit;
+                // Send email confirmation
+                $to = $row['useremail'];
+                $subject = "Admission Confirmation";
+                $message = "Dear " . $row['username'] . ",\n\nYour admission has been confirmed. You are now enrolled in the course.";
+                $headers = "From: admin@yourwebsite.com";
+
+                if (mail($to, $subject, $message, $headers)) {
+                    // Redirect with success message
+                    header("Location: user-admissions.php?msg=Admission confirmed successfully & email sent&status=success");
+                    exit;
+                } else {
+                    // Email not sent
+                    header("Location: user-admissions.php?msg=Admission confirmed, but email failed to send&status=warning");
+                    exit;
+                }
             } else {
                 header("Location: user-admissions.php?msg=Error saving data&status=danger");
                 exit;
