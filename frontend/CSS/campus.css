@@ -1,0 +1,54 @@
+.text-center {
+  text-align: center;
+  color: darkblue;
+  font-size: 30px;
+  font-weight: 600;
+  margin: 10px 0px;
+}
+
+.text-center-para {
+  text-align: center;
+  color: orange;
+  font-size: 20px;
+  text-decoration: overline;
+}
+
+/* campasses portion */
+
+.camp_image {
+  border: 2px solid black;
+  box-shadow: 0px 0px 5px 5px black;
+  width: 400px;
+  margin: 20px auto;
+  background-color: rgb(228, 217, 217);
+}
+
+.camp_image h2 {
+  margin: 10px 0px 0px 0px;
+  font-size: 40px;
+  font-weight: 500;
+  text-align: center;
+  color: orange !important;
+  box-shadow: 0px 0px 5px 2px rgb(223, 145, 1);
+  background-color: teal !important;
+}
+
+.camp_image p {
+  line-height: 40px;
+  font-size: 20px;
+  text-align: justify;
+  padding: 0px 30px;
+  color:orange;
+}
+
+.camp_image img {
+  width: 350px;
+  height: 250px;
+  margin-top: 0px;
+  margin-bottom: 10px;
+  border-radius: 30px;
+  /* margin-left: 22% !important; */
+  margin-left: 17px;
+  border: 10px solid teal;
+
+}

@@ -1,0 +1,400 @@
+
+/* banner */
+.bg-banner .slide{
+min-height: 90vh !important;    
+}
+.custom-banner-container{
+    width: 100%;
+    height: 100vh !important;
+    margin: auto;
+    display: flex;
+    -ms-flex-item-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    justify-content: center;
+} 
+.banner-text-style{
+    z-index: 1000;
+
+}
+.breatcome_title_inner h2 {
+    color: #fff;
+    font-size: 40px;
+    font-weight: 700;
+    margin-bottom: 40px;
+    text-shadow: 0px 4px 9px black;
+    text-align: center;
+    /* text-decoration: overline 5px solid orangered; */
+    text-transform: uppercase;
+    margin-top: 30px;
+
+}
+.breatcome_title_inner h3{
+    color: #fff;
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 80px;
+    text-shadow: 0px 4px 9px black;
+    text-align: center;
+    color: orangered;
+    
+    /* text-decoration: overline 2px solid white; */
+
+}
+
+/* wellcom message */
+/* .custom-head-container{
+    clear: both;
+    width: 100%;
+} */
+/* principel message */
+.custom-principel-message{
+    border-top:10px solid #044e4e; 
+    border-bottom:10px solid #044e4e; 
+    border-radius: 20px;
+
+background-color:rgb(177, 116, 3);
+padding: 30px;
+}
+@media (max-width:990px) {
+    .custom-principel-message img{
+        width: 100%;
+        height: 400px;
+    }
+    
+}
+/* popular course */
+.containerpc .popularcourseheading{
+    text-align: center;
+  padding-bottom: 10px;
+   
+}
+.popularcoursebox .imgincludebox{
+    margin-right: 30px;
+    width:  250px;
+    height:320px;
+    background-color:rgb(177, 116, 3);
+    border: 1px solid gray;
+}
+.popularcoursebox .imgcourse{
+    width: 250px;
+    height: 150px;
+}
+.popularcoursebox .coursepara{
+    background-color:#044e4e;
+    color: white;
+    width: 250px;
+    height: auto;
+    font-weight: normal;
+    letter-spacing: 1px;
+text-align: center;
+
+}
+.popularcoursebox .course-discriptipon{
+    text-align: center;
+   
+    height: 50px;
+   
+}
+.popularcoursebox .imgincludebox .dollerfloat{
+float: right;
+margin-top: -15px;
+background-color:rgb(177, 116, 3);
+padding-left: 8px;
+color:#044e4e;
+
+}
+.popularcoursebox .imgincludebox .paravote{
+ padding: 5px 20px;
+border-top: 2px solid gray;
+
+}
+.popularcoursebox .imgincludebox .paravote .para{
+    
+    float: right;
+
+}
+/* why choose us */
+.custom-choose-container{
+  
+    background-color: rgb(177, 116, 3);
+    padding: 60px 0px;
+   box-sizing: border-box;
+   border-top:10px solid #044e4e; 
+   border-bottom:10px solid #044e4e; 
+   border-radius: 30px;
+}
+ .custom-row{
+    margin: 0 auto;
+   
+ }
+.boxses{
+    /* float: left; */
+  
+    width: 250px;
+     /* margin: 10px 0px; */
+     padding:0px  8px;
+     /* border: 2px solid red; */
+     margin: 0px auto;
+ }
+ .boxses h3{
+ text-align: center;
+     color: #044e4e;
+     font-size: 80px;
+     font-weight: 600;
+     margin-top: 40px;
+ }
+ .boxses p{
+   text-align: center;
+     margin: 30px 0px;
+     font-size: 22px;
+ }
+ .custom-style{
+    margin: 0;
+ }
+ .formpicture{
+    padding: 10px;
+    margin-top: 20px;
+    background-color: white; 
+    max-width: 350px;
+    width: 100%;
+    height: 350px;
+    box-shadow: 2px 2px 0px 15px white inset , -2px -2px 0px 15px white inset;
+}
+ .formpicture h2{
+ text-align: center;
+ padding:30px 0px 30px 0px;
+ font-weight: 600;
+}
+ .formpicture p{
+    text-align: center;
+    line-height: 30px;
+    font-size: 20px;
+
+}
+ .formpicture button{
+   margin: 20px  0px 30px 90px;
+  
+}
+/* responsive */
+@media (max-width:834px) {
+    .boxses{
+        display: flex;
+        flex-direction: column;
+    width: 100%;
+     
+      
+          }
+.formpicture{
+    width: 100%;
+    max-width: 400px;
+    /* border: 1px solid red; */
+}  
+}
+/* @media (max-width : 1280px){
+    .boxses h2,
+    .boxsesp{
+        display: flex;
+        flex-direction: column;
+    }
+} */
+/* why choose us */
+.containerbox{
+    width: 100%;
+    box-sizing: border-box;
+    /* display: flex;
+   flex-direction: row; */
+}
+@media (min-width: 991px) {
+    .containerbox{
+        display: flex;
+       flex-direction: row;
+    }
+    .containerbox .orangeboxpara{
+        margin-left: -60px;
+      
+    }
+    
+}
+.containerbox .blueboxpara{
+    background-color: #044e4e;
+ text-align: justify;
+    padding:60px  40px ;
+}
+.containerbox .orangeboxpara{
+    margin-top: 30px;
+
+    background-color:   rgb(177, 116, 3);
+    text-align: justify;
+    padding:  40px;
+     opacity: 0.8;
+}
+.containerbox img{
+    width: 80px;
+    height: 100px;
+    margin-top: 10px;
+    margin-left: 20px;
+    border-radius: 50%;
+
+ 
+}
+.bluebox .samecss h2{
+    margin-left: 100px;
+    margin-top: -28px;
+   text-align: left;
+    color: rgb(2, 2, 75) !important;
+    font-weight: bold;
+}
+.bluebox  .samecss p{
+    margin-left: 100px;
+    margin-top: -10px;
+    text-align: left;
+    color: rgb(177, 116, 3);
+    font-weight: normal;
+}
+.orangebox .samecss{
+    float: right;
+}
+.orangebox img{
+    width: 80px;
+    height: 100px;
+    float: right;
+    margin-right: 30px;
+    margin-top: -5px;
+}
+/* admission are open */
+.parent{
+    width:100%;
+    background-color: rgb(177, 116, 3);
+  
+   /* position: relative;
+   margin-left: 1%;
+   box-sizing: border-box;
+   */
+}
+@media (min-width:991px) {
+    .parent{
+        display: flex;
+        flex-direction: row;
+    }
+}
+.paramount{
+    background-color: rgb(177, 116, 3);
+padding: 30px;
+
+}
+.paramount h2{
+      text-align:left;
+      color: orange;
+      font-size: 30px;
+      margin:0px 0px 20px 20px ;
+
+}
+
+.video video {
+   width: 100%;
+   max-height: 350px;
+   margin-top: 20px;
+ 
+} 
+/* latest event */
+.latestevent{
+    width: 100%;
+    background-color:rgb(177, 116, 3);
+   box-sizing: border-box;  }
+ .date{
+    color: orange;
+  font-style: italic;
+  font-size: 20px;
+  font-weight: bolder;
+}
+.latestevent p{
+    font-size: 20px;
+    text-align: center;
+    line-height: 28px;
+
+}
+.latestevent .latesteventanim{
+    background-color: rgb(2, 95, 95);
+    color: white;
+    padding-bottom: 20px;
+}
+.latesteventspn1,
+.latesteventspn2,
+.latesteventspn3{
+    padding: 20px  10px;
+    text-align: center;
+}
+.latestevent .latesteventanim p{
+    font-size: 20px;
+    line-height: 30px;
+   text-align: center;
+}
+.animspan::before{
+    content: "";
+    animation: change 1s calc(1) linear;
+    animation-fill-mode: forwards;
+    font-size: 50px;
+    color: orange;
+   animation-iteration-count: infinite;
+}
+@keyframes change {
+    0%{ content: "91"; }
+    20%{ content: "92"; }
+    40%{ content: "93"; }
+    60%{ content: "94"; }
+    80%{ content: "95"; }
+    100%{ content: "96"; }    
+}
+@media (max-width:992px) {
+.latestevent img{
+  margin: 5px auto;
+  width: 100%;
+  height: 400px;
+}
+  
+}
+
+   /* google map and faq */
+
+#accordion{
+    margin: 20px;
+  text-decoration: none;
+}
+#accordion h3{
+    background-color:teal;
+    font-size: 20px;
+    border: 0;
+    color: burlywood;
+}
+#accordion .divppp{
+    font-size: 20px;
+    line-height: 30px;
+    color: white;
+    background-color: burlywood;
+}
+#wrapper h2{
+ text-align: center;
+ font-size: 30px;
+ color: orange;
+ text-decoration: overline;
+}
+#map_canvas{
+    box-sizing: border-box;
+    height: 200px;
+    margin: 10px 0px;
+}
+.googlemapssec h2{
+    text-align: center;
+    color: orange;
+    font-size: 40px;
+    font-weight: 600px;
+}
+.googlemapssec #map_canvas {
+    width: 96%;
+    height: 500px;
+    margin-left:2%;
+    margin-bottom: 20px;
+    box-shadow: 0px 0px 5px 2px black;
+}
+

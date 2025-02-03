@@ -1,0 +1,158 @@
+header {
+    background-color: black;
+}
+
+.custom-col {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.custom-col li {
+    margin: 0 auto;
+}
+.custom-col li a{
+    font-size: 12px !important;
+}
+
+@media (max-width:1192px) {
+    header .custom-container li a {
+        font-size: 12px !important;
+
+        margin: 0;
+    }
+
+}
+
+@media (max-width:632px) {
+    header .custom-col #hidethis li a {
+
+        display: none !important;
+
+    }
+
+}
+
+@media (max-width:537px) {
+    header #forrespo li {
+        width: 100% !important;
+        display: block !important;
+    }
+
+}
+
+/* navigation */
+/* Make images easier to work with */
+/* img,
+picture {
+  display: inline-block !important;
+} */
+nav{
+    display: flex;
+    flex-wrap: nowrap;
+  /* position: relative; */
+  z-index: 10000;
+  position: sticky;
+  top: 0;
+  left: 0;
+background-color:teal;
+max-height: 75px;
+width: 100%;
+box-sizing: border-box;
+}
+nav .hidenav{
+margin-left: auto;
+}
+nav ul li{
+display: inline-block;
+margin: 0 auto;
+}
+nav ul li a{
+/* color:rgb(3, 3, 243); */
+font-size: 17px;
+font-weight: 400px;
+padding: 23px 10px;
+border-radius: 3px;
+text-transform: uppercase;
+}
+nav ul li a.active,
+nav ul li a:hover{
+background-color:rgb(177, 116, 3);
+color: white;
+transition: 0.5s;
+}
+.checkbtn{
+font-size: 30px;
+color: white;
+float: right;
+line-height: 80px;
+margin-right: 20px;
+cursor: pointer;
+display: none;
+}
+#check{
+display: none;
+}
+@media (max-width: 952px){
+label.logo{
+    font-size: 30px;
+    padding-left: 20px;
+}
+nav ul li a{
+    font-size: 16px !important;
+}
+
+}
+@media (max-width: 1100px){
+    nav ul li a{
+        padding: 16px 13px !important;
+        }
+.checkbtn{
+    display: block;
+
+}
+nav img{
+    /* height: 120px; */
+    width: 400px;
+    margin-left:75%;
+}
+nav ul{
+    position: absolute;
+    width: 70%;
+    min-height: 80vh;
+    background-color:rgb(215, 206, 206);
+    top:100%;
+    left: -100%;
+    text-align: center;
+    line-height: 20px !important;
+    transition: all .5s;
+    z-index: 2005;
+}
+nav ul li{
+display: block;
+margin:0;
+line-height: 30px;
+}
+nav ul li a{
+font-size: 20px;
+color: rgb(2, 2, 107);
+}
+/* nav ul li a:hover,
+nav ul li a.actve{
+/* background:none; */
+/*color:black;
+
+
+}*/
+#check:checked ~ ul{
+left: 0;
+
+}
+}
+@media (max-width:723px) {
+    nav img{
+       margin-left: 10%;
+   
+    }   
+       
+   }

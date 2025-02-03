@@ -1,0 +1,37 @@
+
+ * BODY
+ * Your content rules
+ * -------------------------------------------------------------------------------------------------
+ */
+SECTION#body {
+	float: left;
+	width: 100%;
+}
+
+ARTICLE {}
+
+#map_canvas {
+	height: 800px;
+	width: 100%;
+}
+
+/**
+ * CONTACT
+ * Your form rules
+ * -------------------------------------------------------------------------------------------------
+ */
+.contact FORM {}
+
+.contact FORM INPUT[type="text"] {
+	padding: 0 10px;
+}
+
+.contact FORM INPUT[type="submit"] {
+	margin: 0;
+}
+
+#wrapper{
+	margin:20px;
+
+}
+	
