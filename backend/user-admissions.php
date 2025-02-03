@@ -1,6 +1,7 @@
-<?php include('header.php');
- require_once("../includes/config.php");
- checkRole(['Admin']);
+<?php 
+include('header.php');
+require_once("../includes/config.php");
+checkRole(['Admin']);
 $message = $_GET['msg'] ?? '';
 ?>
 

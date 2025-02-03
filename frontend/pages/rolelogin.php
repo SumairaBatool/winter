@@ -18,16 +18,10 @@ $password = '';
 $role = '';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Debugging: Output message on form submission
-    echo "✅ Form submitted!<br>";
-
     // Retrieve and sanitize input
     $useremail = trim(strtolower($_POST['useremail']));
     $password = trim($_POST['password']);
     $role = trim($_POST['role']);
-
-    // Debugging: Output the selected role
-    echo "🔹 Selected Role: " . $role . "<br>";
 
     // Map role names to role IDs
     $role_map = ["Admin" => 1, "Teacher" => 2, "Student" => 3];
@@ -60,19 +54,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
 
-        // Debugging: Output the role ID from the database
-        echo "🔹 Database Role ID: " . $row['role_id'] . " | Selected Role ID: " . $role_int . "<br>";
-
         // Verify password
         if (password_verify($password, $row['userpassword'])) {
-            // Debugging: Password verified
-            echo "✅ Password verified!<br>";
-
             // Check role match
             if ($row['role_id'] == $role_int) {
-                // Debugging: Role match found
-                echo "✅ Role matched! Redirecting...<br>";
-
                 // Store session variables
                 $_SESSION['role'] = $role;
                 $_SESSION['role_id'] = $row['role_id'];
@@ -91,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             die("<p style='color:red;'>❌ Incorrect password.</p>");
         }
     } else {
-        die("<p style='color:red;'>❌ User not found. Please check your email.</p>");
+        die("<p style='color:red;'>❌ User not found.</p>");
     }
 }
 ?>

@@ -1,13 +1,13 @@
 <?php
 require_once("../includes/config.php");
-checkRole(['Admin', 'Student']); // Both Admin and Student can access
+checkRole(['Admin']);
 
 // Check if ID is provided in the URL
 if (isset($_GET['id']) && !empty($_GET['id'])) {
     $admission_id = intval($_GET['id']); // Ensure it's an integer
 
     // Fetch admission details
-    $stmt = $conn->prepare("SELECT id, username, useremail FROM admissions WHERE id = ?");
+    $stmt = $conn->prepare("SELECT id, username, useremail, course_id FROM admissions WHERE id = ?");
     $stmt->bind_param("i", $admission_id);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -28,6 +28,14 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
             $updateStmt->bind_param("ssi", $row['username'], $row['useremail'], $row['id']);
             $updateStmt->execute();
 
+            // Save data in teacher_student table
+            $teacher_id = getTeacherIdByCourse($row['course_id'], $conn); // Function to get the teacher ID based on course
+            if ($teacher_id !== null) {
+                $insertTeacherStudent = $conn->prepare("INSERT INTO teacher_student (tid, sid, course_id, status) VALUES (?, ?, ?, 'confirmed')");
+                $insertTeacherStudent->bind_param("iii", $teacher_id, $row['id'], $row['course_id']);
+                $insertTeacherStudent->execute();
+            }
+
             // Update admission status to confirmed
             $updateAdmissionStmt = $conn->prepare("UPDATE admissions SET adm_status = 'confirmed' WHERE id = ?");
             $updateAdmissionStmt->bind_param("i", $admission_id);
@@ -38,15 +46,19 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
             exit;
         } else {
             // Insert the new student record into the student table
+            // ** Maintaining the foreign key constraint (sid refers to a_users table) **
             $stmt = $conn->prepare("INSERT INTO student (sid, student_name, email) VALUES (?, ?, ?)");
-            $stmt->bind_param(
-                "iss",
-                $row['id'],
-                $row['username'],
-                $row['useremail']
-            );
+            $stmt->bind_param("iss", $row['id'], $row['username'], $row['useremail']);
 
             if ($stmt->execute()) {
+                // Save data in teacher_student table
+                $teacher_id = getTeacherIdByCourse($row['course_id'], $conn); // Function to get the teacher ID based on course
+                if ($teacher_id !== null) {
+                    $insertTeacherStudent = $conn->prepare("INSERT INTO teacher_student (tid, sid, course_id, status) VALUES (?, ?, ?, 'confirmed')");
+                    $insertTeacherStudent->bind_param("iii", $teacher_id, $row['id'], $row['course_id']);
+                    $insertTeacherStudent->execute();
+                }
+
                 // Update admission status to confirmed
                 $updateStmt = $conn->prepare("UPDATE admissions SET adm_status = 'confirmed' WHERE id = ?");
                 $updateStmt->bind_param("i", $admission_id);
@@ -67,5 +79,20 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
 } else {
     header("Location: user-admissions.php?msg=Invalid request&status=danger");
     exit;
+}
+
+// Function to get the teacher ID based on the course
+function getTeacherIdByCourse($course_id, $conn) {
+    $stmt = $conn->prepare("SELECT tid FROM teacher WHERE course_id = ?");
+    $stmt->bind_param("i", $course_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    if ($result->num_rows === 1) {
+        $row = $result->fetch_assoc();
+        return $row['tid']; // Return tid (teacher ID)
+    }
+    
+    return null; // Return null if no teacher is found for the course
 }
 ?>

@@ -1,38 +1,70 @@
-<?php include('header.php') ;
-// Check if admin is logged in
-require_once("../includes/config.php");
-checkRole(['Admin', 'Student','Teacher']);
-
-?>
 <?php
-if (isset($_POST['confirm_student'])) {
-    $student_id = $_POST['sid'];
+ob_start();
+include('header.php');
+require_once("../includes/config.php");
+// Ensure teacher is logged in and the teacher ID is available in the session
+if (isset($_SESSION['role']) && $_SESSION['role'] == 'Teacher') {
+    // Fetch teacher ID from session
+    $teacher_id = $_SESSION['uid'];
 
-    // Get student details including course
-    $studentQuery = "SELECT * FROM admissions WHERE id = '$student_id'";
-    $studentResult = $conn->query($studentQuery);
-    $studentData = $studentResult->fetch_assoc();
-
-    if ($studentData) {
-        $course_id = $studentData['cid'];
-
-        // Find teacher handling the course
-        $teacherQuery = "SELECT tid FROM corses WHERE id = '$course_id'";
-        $teacherResult = $conn->query($teacherQuery);
-        $teacherData = $teacherResult->fetch_assoc();
-
-        if ($teacherData) {
-            $teacher_id = $teacherData['tid'];
-
-            // Insert student into `teacher_students`
-            $insertQuery = "INSERT INTO teacher_students (tid, sid, cid) VALUES ('$teacher_id', '$student_id', '$course_id')";
-            if ($conn->query($insertQuery)) {
-                echo "<div class='alert alert-success'>Student confirmed and assigned to teacher.</div>";
-            } else {
-                echo "<div class='alert alert-danger'>Error: " . $conn->error . "</div>";
-            }
-        }
-    }
 }
+
+// Fetch students assigned to the logged-in teacher's course
+$stmt = $conn->prepare("SELECT s.sid, s.student_name, s.email, t.course_id, c.sub_name 
+                        FROM student s
+                        JOIN teacher_student ts ON s.sid = ts.sid
+                        JOIN teacher t ON ts.tid = t.tid
+                        JOIN corses c ON t.course_id = c.id
+                        WHERE t.tid = ?");
+$stmt->bind_param("i", $teacher_id); // Bind the teacher's ID to the query
+$stmt->execute();
+$result = $stmt->get_result();
+
 ?>
-<?php include('footer.php') ?>
+
+<div class="pagetitle">
+    <h1>My Enrolled Courses</h1>
+</div>
+
+<section class="section">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body table-responsive">
+                    <h5 class="card-title">Course Enrollment Details</h5>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Student ID</th>
+                                <th>Student Name</th>
+                                <th>Email</th>
+                                <th>Course</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if ($result->num_rows > 0) { ?>
+                                <?php while ($row = $result->fetch_assoc()) { ?>
+                                    <tr>
+                                        <td><?= htmlspecialchars($row['sid']) ?></td>
+                                        <td><?= htmlspecialchars($row['student_name']) ?></td>
+                                        <td><?= htmlspecialchars($row['email']) ?></td>
+                                        <td><?= htmlspecialchars($row['sub_name']) ?></td>
+                                    </tr>
+                                <?php } ?>
+                            <?php } else { ?>
+                                <tr>
+                                    <td colspan="4">No students found for your course.</td>
+                                </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<?php
+include('footer.php');
+ob_end_flush();
+?>

@@ -142,6 +142,12 @@ checkRole(['Admin', 'Student','Teacher']);
                     <span>Courses</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="records.php">
+                    <i class="bi bi-person"></i>
+                    <span>Course based Record</span>
+                </a>
+            </li>
         <?php endif; ?>
 
         <?php if ($_SESSION['role'] === 'Student'): ?>

@@ -1,11 +1,6 @@
 <?php
 // Include the database connection
 include('header.php');
-// Check if admin is logged in
-// if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Admin') {
-//     header("Location: ../frontend/pages/login.php");
-//         exit;
-// }
 $message = '';  // To display success or error messages
 
 // Fetch course titles for the dropdown
@@ -22,21 +17,53 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $teacher_name = $_POST['teacher_name'];
     $teacher_email = $_POST['email'];
     $course_id = $_POST['course_id'];
+    $password = $_POST['password'];
+    $confirm_password = $_POST['confirm_password'];
 
-    // Query to check for duplicate email
-    $email_check_sql = "SELECT * FROM teacher WHERE email = '$teacher_email'";
-    $email_check_result = $conn->query($email_check_sql);
-
-    if ($email_check_result && $email_check_result->num_rows > 0) {
-        $message = "<div class='alert alert-danger'>This email is already in use! Please choose another.</div>";
+    // Validate that passwords match
+    if ($password !== $confirm_password) {
+        $message = "<div class='alert alert-danger'>Passwords do not match. Please try again.</div>";
     } else {
-        // Proceed with inserting teacher information
-        $insert_sql = "INSERT INTO teacher (teacher_name, email, course_id, created_at) VALUES ('$teacher_name', '$teacher_email', '$course_id', NOW())";
+        // Hash the password
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-        if ($conn->query($insert_sql) === TRUE) {
-            $message = "<div class='alert alert-success'>Teacher added successfully</div>";
+        // Query to check for duplicate email
+        $email_check_sql = "SELECT * FROM teacher WHERE email = '$teacher_email'";
+        $email_check_result = $conn->query($email_check_sql);
+
+        if ($email_check_result && $email_check_result->num_rows > 0) {
+            $message = "<div class='alert alert-danger'>This email is already in use! Please choose another.</div>";
         } else {
-            $message = "<div class='alert alert-danger'>Error: " . $conn->error . "</div>";
+            // Get the role_id for 'teacher' from the role table
+            $role_sql = "SELECT id FROM role WHERE role_name = 'teacher'";
+            $role_result = $conn->query($role_sql);
+
+            if ($role_result && $role_result->num_rows > 0) {
+                $role_row = $role_result->fetch_assoc();
+                $role_id = $role_row['id'];  // Get the role_id for 'teacher'
+
+                // First insert the user into a_users table with the correct role_id
+                $insert_user_sql = "INSERT INTO a_users (useremail, userpassword, role_id) VALUES ('$teacher_email', '$hashed_password', '$role_id')";
+                
+                if ($conn->query($insert_user_sql) === TRUE) {
+                    // Get the user ID from the inserted record
+                    $user_id = $conn->insert_id; // This retrieves the ID of the newly inserted user in a_users
+
+                    // Now insert the teacher into the teacher table with the foreign key (user_id)
+                    $insert_teacher_sql = "INSERT INTO teacher (teacher_name, email, course_id, teacher_password, created_at, tid) 
+                                           VALUES ('$teacher_name', '$teacher_email', '$course_id', '$hashed_password', NOW(), '$user_id')";
+
+                    if ($conn->query($insert_teacher_sql) === TRUE) {
+                        $message = "<div class='alert alert-success'>Teacher added successfully</div>";
+                    } else {
+                        $message = "<div class='alert alert-danger'>Error inserting teacher: " . $conn->error . "</div>";
+                    }
+                } else {
+                    $message = "<div class='alert alert-danger'>Error inserting user: " . $conn->error . "</div>";
+                }
+            } else {
+                $message = "<div class='alert alert-danger'>Role 'teacher' not found in the role table.</div>";
+            }
         }
     }
 }
@@ -50,6 +77,10 @@ if (!$result) {
     $message = "<div class='alert alert-danger'>Error fetching teachers: " . $conn->error . "</div>";
 }
 ?>
+
+
+
+
 
 <div class="pagetitle">
     <h1>Teachers</h1>
@@ -153,6 +184,15 @@ if (!$result) {
                             }
                             ?>
                         </select>
+                    </div>
+                    <!-- Add password fields -->
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">Password</span>
+                        <input type="password" name="password" class="form-control" required>
+                    </div>
+                    <div class="input-group input-group-sm mb-3">
+                        <span class="input-group-text">Confirm Password</span>
+                        <input type="password" name="confirm_password" class="form-control" required>
                     </div>
                 </div>
                 <div class="modal-footer">
