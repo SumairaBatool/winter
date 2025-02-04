@@ -43,12 +43,7 @@ $status = htmlspecialchars($_GET['status'] ?? '');
                                     <tr>
                                         <th>Sr. #</th>
                                         <th>User Image</th>
-                                        <th>Username</th>
                                         <th>User Email</th>
-                                        <th>Qualification</th>
-                                        <th>Village</th>
-                                        <th>Phone</th>
-                                        <th>Marital Status</th>
                                         <th>Subject</th>
                                         <th>Admission Status</th>
                                         <th>Joining Date</th>
@@ -71,15 +66,10 @@ $status = htmlspecialchars($_GET['status'] ?? '');
                                             <tr>
                                                 <td><?= htmlspecialchars($row_cl["id"] ?? 'Unknown'); ?></td>
                                                 <td>
-                                                    <img src="<?= htmlspecialchars(url($row_cl["userimage"])) ?>" width="50px" height="50px" alt="User Image">
+                                                    <img src="<?= htmlspecialchars(!empty($row_cl['userimage']) ? '../frontend/' . $row_cl['userimage'] : 'path/to/default-placeholder.png') ?>" width="50px" height="50px" alt="User Image">
                                                 </td>
                                                 <td><?= htmlspecialchars($row_cl['username'] ?? 'Unknown'); ?></td>
-                                                <td><?= htmlspecialchars($row_cl['useremail'] ?? 'Unknown'); ?></td>
                                                 <td><?= htmlspecialchars($row_cl['qulification'] ?? 'Unknown'); ?></td>
-                                                <td><?= htmlspecialchars($row_cl['village'] ?? 'Unknown'); ?></td>
-                                                <td><?= htmlspecialchars($row_cl['phone'] ?? 'Unknown'); ?></td>
-                                                <td><?= htmlspecialchars($row_cl['status'] ?? 'Unknown'); ?></td>
-                                                <td><?= htmlspecialchars($row_cl['subject'] ?? 'Unknown'); ?></td>
                                                 <td><?= htmlspecialchars($row_cl['adm_status'] ?? 'Pending'); ?></td>
                                                 <td><?= htmlspecialchars(date('Y M, d', strtotime($row_cl["created_at"])) ?? 'Unknown'); ?></td>
                                             </tr>

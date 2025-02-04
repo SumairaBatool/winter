@@ -32,10 +32,7 @@ $message = $_GET['msg'] ?? '';
                                 <th>Sr. #</th>
                                 <th>User Image</th>
                                 <th>Username</th>
-                                <th>Email</th>
                                 <th>Degree</th>
-                                <th>Village</th>
-                                <th>Phone</th>
                                 <th>Marital Status</th>
                                 <th>Course</th>
                                 <th>Admission Status</th>
@@ -50,10 +47,7 @@ $message = $_GET['msg'] ?? '';
                                         a.id, 
                                         a.userimage, 
                                         a.username, 
-                                        a.useremail, 
-                                        a.qulification, 
-                                        a.village, 
-                                        a.phone, 
+                                        a.qulification,
                                         a.status, 
                                         a.adm_status, 
                                         a.created_at, 
@@ -82,10 +76,7 @@ $message = $_GET['msg'] ?? '';
                                             <img src="<?= htmlspecialchars($imagePath, ENT_QUOTES, 'UTF-8') ?>" class="rounded-circle" alt="User Image" style="width: 60px; height: 60px; object-fit: cover;">
                                         </td>
                                         <td><?= htmlspecialchars($row['username'] ?? 'unknown') ?></td>
-                                        <td><?= htmlspecialchars($row['useremail'] ?? 'unknown') ?></td>
                                         <td><?= htmlspecialchars($row['qulification'] ?? 'unknown') ?></td>
-                                        <td><?= htmlspecialchars($row['village'] ?? 'unknown') ?></td>
-                                        <td><?= htmlspecialchars($row['phone'] ?? 'unknown') ?></td>
                                         <td><?= htmlspecialchars($row['status'] ?? 'unknown') ?></td>
                                         <td><?= htmlspecialchars($row['sub_name'] ?? 'N/A') ?></td>
                                         <td><?= htmlspecialchars($row['adm_status'] ?? 'pending') ?></td>

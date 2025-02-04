@@ -40,10 +40,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if ($fileSize < 5000000) { // 5MB limit
                     // Unique file name
                     $fileNameNew = uniqid('', true) . "." . $fileActualExt;
-                    $fileDestination = '../frontend/uploads/courses/' . $fileNameNew;
+                    $fileDestination = '../frontend/uploads/' . $fileNameNew;
                     // Move file to upload directory
                     if (move_uploaded_file($fileTmpName, $fileDestination)) {
-                        $fileDestination = 'frontend/uploads/courses/' . $fileNameNew; // Update to relative path
+                        $fileDestination = '../frontend/uploads/' . $fileNameNew; // Update to relative path
                     } else {
                         $message = "<div class='alert alert-danger'>File upload failed!</div>";
                     }
